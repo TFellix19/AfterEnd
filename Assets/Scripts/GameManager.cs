@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
         vida = maxV;
         //encontrar o menu de pause e todos os gameobjects do jogo e desativa o menu de pause
         PauseMenu = GameObject.Find("PauseMenu");
-        game = GameObject.Find("game");
         PauseMenu.SetActive(false);
     } 
     //pausar o jogo
@@ -29,14 +28,12 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         PauseMenu.SetActive(true);
-        game.SetActive(false);
     }
     //voltar ao jogo
     public void ResumeGame()
     {
         Time.timeScale = 1;
         PauseMenu.SetActive(false);
-        game.SetActive(true);
     }
     void Update()
     {
@@ -59,10 +56,14 @@ public class GameManager : MonoBehaviour
         // if para testar se a personagem tem fome ou sede 
         if ((fome <= 0f) || (sede <= 0f))
         {
-            vida -= 3f * Time.deltaTime; //se a fome ou sede estiverem a 0 a personagem começa a perder vida
+            vida -= 2f * Time.deltaTime; //se a fome ou sede estiverem a 0 a personagem começa a perder vida
         }
-        fome -= 2f * Time.deltaTime; // perda gradual de fome
-        sede -= 2f * Time.deltaTime; // perda gradual de sede
+        else
+        {
+            fome -= 1f * Time.deltaTime; // perda gradual de fome
+            sede -= 1f * Time.deltaTime; // perda gradual de sede
+        }
+        
         //atribui os valores de fome,sede e vida aos respecivos sliders (barras)
         SliderFome.value = fome; 
         SliderSede.value = sede;
