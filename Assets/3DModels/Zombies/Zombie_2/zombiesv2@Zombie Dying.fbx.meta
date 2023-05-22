@@ -3,7 +3,12 @@ guid: 36b5c273fb7804e2e9e17f6cea6aa83e
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: palettemat
+    second: {fileID: 2100000, guid: 16f8494b852c54e0cb5b06ccd4ed5f10, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,9 +21,7 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tFound
-      duplicate transform 'mixamorig:RightHandIndex1' for human bone 'Right Index
-      Proximal' and 'RightHand'\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
