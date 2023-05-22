@@ -8,9 +8,9 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: palettemat
-    second: {fileID: 2100000, guid: 75cc2c281903444398c3bca3e201e013, type: 2}
+    second: {fileID: -8469494145858465668, guid: 657551bf978641248bba10ffb7ce210c, type: 3}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
