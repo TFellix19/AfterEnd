@@ -1,186 +1,87 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody playerRb; 
-    private AudioSource audioSource;
-    public GameObject vida;
-    private Animator myAnimation;
-    private bool isDead = false; 
-    private bool respawning = false;
-    [SerializeField] private float jumpPower;
-    private bool grounded;
-    private bool canDoubleJump;
-    [SerializeField] private float velocidadeAndar;
-    private int playerLives = 3;
-    [SerializeField] private List<GameObject> lifeImages;
-    private Vector3 startPosition;
-    private Vector3 deathPosition;
-    private enum PlayerState { Normal, Dying, Dead, Respawning }
-    private PlayerState playerState = PlayerState.Normal;
-    private Renderer myRenderer;
-    [SerializeField] private AudioClip somSalto;
-    [SerializeField] private AudioClip somColisao;
-    [SerializeField] private AudioClip morreInimigo;
-
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-    Vector3 velocity;
-    float gravity = -9.81f;
-
+    public float speed = 5f;
+    public float runSpeed = 7f;
+    public float jumpForce = 2f;
+    public bool hasWeapon = false; // Defina como true quando o jogador pegar uma arma
+    private Animator animator;
+    private Rigidbody rb;
+    private bool isJumping = false;
 
     void Start()
     {
-        myAnimation = GetComponent<Animator>();
-        playerRb = GetComponent<Rigidbody>();
-        grounded = true;
-        canDoubleJump = false;
-        startPosition = transform.position;
-        audioSource = GetComponent<AudioSource>();
-        myRenderer = GetComponent<Renderer>();
-        velocity = playerRb.velocity;
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+        // hasWeapon = true; //teste com arma - funciona!
     }
 
-
-    void FixedUpdate()
+    void Update()
     {
-        if (isDead) return;
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
-        grounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-        if(grounded && velocity.y < 0)
+        animator.SetFloat("VelocidadeAndar", movement.magnitude);
+        animator.SetFloat("VelocidadeSalto", rb.velocity.y);
+
+        animator.SetBool("Arma", hasWeapon);
+    
+        if (movement.magnitude > 0.1f) 
         {
-            velocity.y = -2f;
-        }
-
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        HandleMovement(horizontal, vertical);
-
-        velocity.y += gravity * Time.deltaTime;
-
-        playerRb.MovePosition(transform.position + velocity * Time.deltaTime);
-    }
-
-
-    private void HandleMovement(float horizontal, float vertical)
-    {
-        if (playerState != PlayerState.Normal) return;
-
-        Vector3 move = transform.right * horizontal + transform.forward * vertical;
-
-        playerRb.velocity = new Vector3(horizontal * velocidadeAndar, playerRb.velocity.y, vertical * velocidadeAndar);
-
-        if (Input.GetButtonDown("Jump") && grounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
-            myAnimation.SetFloat("VelocidadeSalto", velocity.y);
-        }
-        {
-            if (grounded)
+            if (movement.magnitude > 0.5f)
             {
-                playerRb.AddForce(Vector3.up * jumpPower);
-                audioSource.PlayOneShot(somSalto);
-                canDoubleJump = false;
-                grounded = false;
-
-                myAnimation.SetFloat("VelocidadeSalto", playerRb.velocity.y);
-            }
+                // O personagem está correndo
+                animator.SetBool("Caminhar", false);
+                animator.SetBool("Correr", true);
+                rb.AddForce(movement * runSpeed);
+            } 
             else
             {
-                if (canDoubleJump)
-                {
-                    canDoubleJump = false;
-                    playerRb.velocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z);
-                    playerRb.AddForce(Vector3.up * jumpPower / 1.75f);
-                }
+                // O personagem está caminhando
+                animator.SetBool("Caminhar", true);
+                animator.SetBool("Correr", false);
+                rb.AddForce(movement * speed);
             }
+
+            // O personagem está se movendo, então atualize sua rotação
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
+        } 
+        else 
+        {
+            // O personagem não está se movendo
+            animator.SetBool("Caminhar", false);
+            animator.SetBool("Correr", false);
         }
 
-        myAnimation.SetFloat("VelocidadeAndar", Mathf.Sqrt(horizontal * horizontal + vertical * vertical));
-
-        myAnimation.SetBool("Caminhar", playerRb.velocity.magnitude > 0.1f);
-        myAnimation.SetBool("Correr", playerRb.velocity.magnitude > 0.5f);
-
-        // Controla a orientação do personagem em 3D
-        Vector3 direction = new Vector3(horizontal, 0, vertical);
-        if (direction != Vector3.zero)
+        if (Input.GetButtonDown("Jump") && !isJumping)
         {
-            transform.rotation = Quaternion.LookRotation(direction);
+            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+            animator.SetBool("Saltar", true);
+            isJumping = true;
+        } 
+        else if (Mathf.Abs(rb.velocity.y) < 0.1f)
+        {
+            animator.SetBool("Saltar", false);
+            isJumping = false;
         }
     }
 
-
-    private void OnCollisionEnter(Collision collision)
+    void Die()
     {
-        if (collision.gameObject.tag == "plataforma")
-        {
-            grounded = true;
-            canDoubleJump = false;
-        }
-
-
-        if (collision.gameObject.tag == "inimigo" || collision.gameObject.tag == "passaro")
-        {
-            if (!isDead)
-            {
-                LoseLife();
-            }
-        }
+        animator.SetTrigger("Morrer");
+        // Implemente aqui o que acontece quando o personagem morre
     }
 
-
-    private void LoseLife()
+    void GetWeapon() // Chame este método quando o personagem pegar uma arma
     {
-        if (respawning) return; 
-
-        playerLives--; 
-
-        if (playerLives >= 0)
-        {
-            deathPosition = transform.position; 
-            audioSource.PlayOneShot(morreInimigo); 
-            playerState = PlayerState.Respawning; 
-            myAnimation.SetTrigger("Morrer"); 
-
-            GameObject lostLifeInstance = Instantiate(vida, new Vector3(lifeImages[playerLives].transform.position.x, lifeImages[playerLives].transform.position.y, 0f), Quaternion.identity);
-            lostLifeInstance.transform.SetParent(lifeImages[playerLives].transform.parent);
-
-            Destroy(lifeImages[playerLives]);
-            lifeImages.RemoveAt(playerLives);
-
-            StartCoroutine(Respawn(0.4f));
-        }
-        else
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
-        }
+        hasWeapon = true;
     }
 
-
-    private IEnumerator Respawn(float delay)
+    void LoseWeapon() // Chame este método quando o personagem perder a arma
     {
-                yield return new WaitForSeconds(delay); 
-        myAnimation.ResetTrigger("Morrer"); 
-
-        myAnimation.SetTrigger("Idle"); 
-
-        playerState = PlayerState.Normal;
+        hasWeapon = false;
     }
-
-
-    private IEnumerator ReappearAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        myAnimation.SetTrigger("Idle");
-        playerState = PlayerState.Normal;
-    }
-
-
 }
