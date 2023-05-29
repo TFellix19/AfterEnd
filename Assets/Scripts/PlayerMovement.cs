@@ -21,9 +21,9 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if(isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = -1f;
         }
 
         float X = Input.GetAxis("Horizontal");
@@ -33,12 +33,14 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(move * speed * Time.deltaTime);
 
-        if(Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
         velocity.y += gravity * Time.deltaTime;
+
+        controller.stepOffset = controller.height / 1f; // Ajuste o valor do Step Offset
 
         controller.Move(velocity * Time.deltaTime);
     }
