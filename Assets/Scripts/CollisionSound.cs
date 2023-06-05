@@ -12,7 +12,7 @@ public class CollisionSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
-            
+            // Se não houver um AudioSource no objeto, adicione um novo
             audioSource = gameObject.AddComponent<AudioSource>();
         }
         audioSource.clip = collisionClip; // Define o som a ser reproduzido
