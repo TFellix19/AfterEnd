@@ -11,6 +11,8 @@ public class Gun : MonoBehaviour
     public int currentAmmo;
     public float reloadTime = 1f;
     private bool isReloading = false;
+    public ParticleSystem muzzleFlash;
+    AudioSource n_shootSound;
 
     public Camera fpsCam;
 
@@ -60,7 +62,9 @@ public class Gun : MonoBehaviour
 
     void Shoot ()
     {
-
+        n_shootSound = GetComponent<AudioSource>();
+        n_shootSound.Play();
+        muzzleFlash.Play();
         currentAmmo--;
 
         RaycastHit hit;
