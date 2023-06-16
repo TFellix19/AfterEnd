@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 843998361}
     m_Modifications:
+    - target: {fileID: 785031879572220459, guid: b60134bc8d5e84498b1bdb0e1a4cca2b, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1253053056825966188, guid: b60134bc8d5e84498b1bdb0e1a4cca2b, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.8301608
@@ -138,9 +142,17 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: 0.0061590043
       objectReference: {fileID: 0}
+    - target: {fileID: 3818044301166010993, guid: b60134bc8d5e84498b1bdb0e1a4cca2b, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4701219131256711653, guid: b60134bc8d5e84498b1bdb0e1a4cca2b, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5094886853548182207, guid: b60134bc8d5e84498b1bdb0e1a4cca2b, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5094886853548182207, guid: b60134bc8d5e84498b1bdb0e1a4cca2b, type: 3}
       propertyPath: m_LocalScale.x
@@ -1625,7 +1637,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 843998361}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &687044874
 PrefabInstance:
@@ -2141,7 +2153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 84968307}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &842837253
 GameObject:
@@ -2271,9 +2283,9 @@ Transform:
   m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 84968307}
   - {fileID: 884916529}
   - {fileID: 654280235}
+  - {fileID: 84968307}
   - {fileID: 1788664177}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -2476,7 +2488,7 @@ MonoBehaviour:
   SliderVida: {fileID: 632452541}
   "Invent\xE1rio": []
   QuickDraw: []
-  textbalas: {fileID: 484689249}
+  textbalas: {fileID: 0}
 --- !u!114 &881743986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2599,7 +2611,7 @@ Transform:
   - {fileID: 1818530487}
   - {fileID: 1612252686}
   m_Father: {fileID: 843998361}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &884916530
 Camera:
@@ -5689,7 +5701,9 @@ MonoBehaviour:
   maxAmmo: 10
   currentAmmo: 0
   reloadTime: 1
+  muzzleFlash: {fileID: 0}
   fpsCam: {fileID: 884916530}
+  animator: {fileID: 0}
 --- !u!1 &1827657857
 GameObject:
   m_ObjectHideFlags: 0
