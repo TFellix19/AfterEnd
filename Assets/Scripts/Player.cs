@@ -136,8 +136,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
         void Die()
     {
         animator.SetTrigger("Morrer");
