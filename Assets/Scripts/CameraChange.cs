@@ -13,7 +13,7 @@ public class CameraChange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Camera"))
+        if (Input.GetButtonDown("MudarCamera"))
         {
             if (CamMode == 1)
             {
