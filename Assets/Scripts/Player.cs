@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
 
 
 
-    void Die()
+        void Die()
     {
         animator.SetTrigger("Morrer");
         // Implemente aqui o que acontece quando o personagem morre
