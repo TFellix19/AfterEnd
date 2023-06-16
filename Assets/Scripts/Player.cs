@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-
     public float velocidadeAndar = 5;
     public float velocidadeRodar = 0.1f;
     CharacterController _characterController;
@@ -54,8 +53,6 @@ public class Player : MonoBehaviour
         float X = Input.GetAxis("Horizontal");
         float Z = Input.GetAxis("Vertical");
 
-        
-
         Vector3 movement = new Vector3(X, 0.0f, Z);
 
         animator.SetFloat("VelocidadeAndar", movement.magnitude);
@@ -93,8 +90,9 @@ public class Player : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         _characterController.transform.Rotate(_characterController.transform.up * velocidadeRodar * inputRodar);
 
-
         controller.Move(velocity * Time.deltaTime);
+
+
 
 
         if (movement.magnitude > 0.1f)
@@ -113,7 +111,9 @@ public class Player : MonoBehaviour
                 animator.SetBool("Correr", false);
                 rb.AddForce(movement.normalized * speed);
             }
-            
+            //Vector3 inputDir = orientation.forward * verticalInput 
+            // O personagem está se movendo, então atualize sua rotação
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
         }
         else
         {
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
 
 
 
-        void Die()
+    void Die()
     {
         animator.SetTrigger("Morrer");
         // Implemente aqui o que acontece quando o personagem morre
