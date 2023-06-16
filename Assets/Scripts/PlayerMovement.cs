@@ -13,7 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    AudioSource correr;
+
+    [SerializeField] private AudioSource jumpSoundEffect;
+    [SerializeField] private AudioSource correrSoundEffect;
 
     Vector3 velocity;
     bool isGrounded;
@@ -22,11 +24,10 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < 0) //quando o boneco cai
         {
-            velocity.y = -1f;
-            correr = GetComponent<AudioSource>();
-            correr.Play();
+            velocity.y = -2f;
+            correrSoundEffect.Play();
         }
 
         float X = Input.GetAxis("Horizontal");
@@ -38,12 +39,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            jumpSoundEffect.Play();
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
         velocity.y += gravity * Time.deltaTime;
-
-        controller.stepOffset = controller.height / 1f; // Ajuste o valor do Step Offset
 
         controller.Move(velocity * Time.deltaTime);
     }

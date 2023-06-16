@@ -3,24 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
     public Slider SliderFome, SliderSede, SliderVida;
-
-    public static float fome, sede, vida;
+    public List<Item> Inventário = new List<Item>();
+    public List<Item> QuickDraw = new List<Item>();
+    public static float fome, sede, vida, nbalas= 0;
     float maxF = 100f, maxS = 100f, maxV = 100f;
-    bool gameIsPaused;
-    GameObject PauseMenu, game;
+    bool gameIsPaused, InvAberto;
+    [SerializeField]
+    public TMP_Text textbalas;
+    public static GameObject PauseMenu, ApanharE, Inv;
     void Start()
     {
+        /*
+        textbalas = GetComponent<TMP_Text>();
+        textbalas.text = "sdas";*/
         //no inicio do jogo a personagem começa com a fome sede e vida no máximo
         fome = maxF;
         sede = maxS;
         vida = maxV;
         //encontrar o menu de pause e todos os gameobjects do jogo e desativa o menu de pause
         PauseMenu = GameObject.Find("PauseMenu");
+        ApanharE = GameObject.Find("ApanharItem");
+        Inv = GameObject.Find("Inventario");
+        ApanharE.SetActive(false);
+        Inv.SetActive(false);
         PauseMenu.SetActive(false);
     } 
     //pausar o jogo
@@ -35,8 +46,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         PauseMenu.SetActive(false);
     }
+    public void FecharInv()
+    {
+        Inv.SetActive(false);
+    }
     void Update()
     {
+        //textbalas.text = nbalas.ToString();
         // se o esc for clickado o jogo fica paused ou unpaused
         if (Input.GetButtonDown("Cancel"))
         {
@@ -48,10 +64,20 @@ public class GameManager : MonoBehaviour
             }
             else { ResumeGame(); }
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log("pause");
+            InvAberto = !InvAberto;
+            if (InvAberto)
+            {
+                Inv.SetActive(true);
+            }
+            else { Inv.SetActive(false); }
+        }
         // if para testar se a personagem está viva
         if (vida <= 0f)
         {
-            //SceneManager.LoadScene("perdeu"); // se a vida estiver a 0 a personagem morreu e é carregada a scene de derrota
+            SceneManager.LoadScene("GameOver"); // se a vida estiver a 0 a personagem morreu e é carregada a scene de derrota
         }
         // if para testar se a personagem tem fome ou sede 
         if ((fome <= 0f) || (sede <= 0f))

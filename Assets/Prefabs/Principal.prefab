@@ -564,9 +564,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5094886853548182207}
   - component: {fileID: 1176706474910535877}
-  - component: {fileID: 4701219132026889814}
-  - component: {fileID: 4701219132026889833}
-  - component: {fileID: 4701219132026889834}
   m_Layer: 0
   m_Name: Principal
   m_TagString: Player
@@ -612,51 +609,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!54 &4701219132026889814
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5620347431053709317}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
---- !u!65 &4701219132026889833
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5620347431053709317}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.03165394, y: 0.058515713, z: 0.026093746}
-  m_Center: {x: -0.00040891767, y: 0.02304063, z: -0.000934544}
---- !u!114 &4701219132026889834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5620347431053709317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45b9a569f3f17d4499aa7d7c3acb4a43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 12
-  runSpeed: 7
-  jumpForce: 2
-  hasWeapon: 0
 --- !u!1 &5637122966717051742
 GameObject:
   m_ObjectHideFlags: 0
