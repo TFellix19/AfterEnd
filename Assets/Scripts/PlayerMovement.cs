@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    AudioSource correr;
 
     Vector3 velocity;
     bool isGrounded;
@@ -24,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -1f;
+            correr = GetComponent<AudioSource>();
+            correr.Play();
         }
 
         float X = Input.GetAxis("Horizontal");
