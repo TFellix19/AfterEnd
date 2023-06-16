@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     public float speed = 12f;
     public float gravity = -9.81f;
-    public float jumpHeight = 3f;
+    public float jumpHeight = 8f;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -28,9 +28,6 @@ public class Player : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
-
-
-
 
     public bool hasWeapon = false; // Defina como true quando o jogador pegar uma arma
     private Animator animator;
@@ -59,7 +56,6 @@ public class Player : MonoBehaviour
         animator.SetFloat("VelocidadeSalto", rb.velocity.y);
 
         animator.SetBool("Arma", hasWeapon);
-
 
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -91,8 +87,6 @@ public class Player : MonoBehaviour
         _characterController.transform.Rotate(_characterController.transform.up * velocidadeRodar * inputRodar);
 
         controller.Move(velocity * Time.deltaTime);
-
-
 
 
         if (movement.magnitude > 0.1f)

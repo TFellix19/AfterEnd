@@ -13,6 +13,7 @@ public class Inventario : MonoBehaviour
     {
         if (inventario.Count < slotsI)
         {
+           
             inventario.Add(item);
             return true;
         }

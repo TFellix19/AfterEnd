@@ -7,12 +7,13 @@ public class Item : MonoBehaviour
     [SerializeField]
     public string nome, tipo;
     [SerializeField]
-    public float fome, sede, vida, dano;
+    public float fome, sede, vida, dano, quantidade;
     [SerializeField]
-    public Texture2D icon;
-    public Item (string Inome, string Itipo, float Ifome, float Isede, float Ivida , float Idano, Texture2D Iicon)
+    public Sprite icon;
+    public Item (string Inome, string Itipo, float Ifome, float Iquantidade, float Isede, float Ivida , float Idano, Sprite Iicon)
     {
         nome = Inome;
+        quantidade = Iquantidade;
         tipo = Itipo;
         fome = Ifome;
         sede = Isede;

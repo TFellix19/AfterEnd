@@ -37,24 +37,7 @@ public class ItemPickup : MonoBehaviour
                 Inventario inventory = Player.GetComponent<Inventario>();
                 if (inventory.AddItem(item))
                 {
-                    if (item.tipo == "comida")
-                    {
-                        GameManager.fome = GameManager.fome + item.fome;
-                        GameManager.sede = GameManager.sede + item.sede;
-                    }
-                    if (item.tipo == "vida")
-                    {
-                        GameManager.vida = GameManager.vida + item.vida;
-                        
-                    }
-                    if (item.tipo == "balas")
-                    {
-                        GameManager.nbalas = GameManager.nbalas + 1;
-                    }
-                    if (item.tipo == "arma")
-                    {
-                        GameManager.nbalas = GameManager.nbalas + 1;
-                    }
+                   
                     Destroy(gameObject);
                     GameManager.ApanharE.SetActive(false);
                     podeapanhar = false;
