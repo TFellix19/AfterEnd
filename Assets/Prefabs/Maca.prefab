@@ -81,7 +81,7 @@ MonoBehaviour:
   vida: 0
   dano: 0
   quantidade: 0
-  icon: {fileID: 21300000, guid: 576e0bfa2f0f48d4e977e2fbc663e3b8, type: 3}
+  icon: {fileID: 21300000, guid: 24f014df9da3f494db2ba98cf22baff4, type: 3}
 --- !u!114 &1751620282731233573
 MonoBehaviour:
   m_ObjectHideFlags: 0

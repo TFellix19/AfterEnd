@@ -10,13 +10,13 @@ public class Zombies : MonoBehaviour
     private Animator animator;
     private bool isAttacking = false;
 
-    public float speed = 2f; // Velocidade de movimento do zumbi
-    public float rotationSpeed = 2f; // Velocidade de rotação do zumbi
+    public float speed = 2f; // Velocidade do movimento do zombie
+    public float rotationSpeed = 2f; // Velocidade da rotação do zombie
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player"); 
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -26,12 +26,13 @@ public class Zombies : MonoBehaviour
         if (distanceToPlayer <= detectionRange)
         {
             Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+            directionToPlayer.y = 0f;
 
-            // Faz o zumbi olhar para o player
+            // zombie olha para o player
             Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
 
-            if(distanceToPlayer <= distanceToAttack) // Altera de 0.5f para distanceToAttack
+            if (distanceToPlayer <= distanceToAttack) // Altera de 0.5f para distanceToAttack
             {
                 isAttacking = true;
                 GameManager.vida -= 0.5f;
@@ -44,6 +45,7 @@ public class Zombies : MonoBehaviour
                 animator.SetBool("Atacar", false);
                 animator.SetBool("Correr", true);
                 transform.position += directionToPlayer * speed * Time.deltaTime;
+
             }
         }
         else

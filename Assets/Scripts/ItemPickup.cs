@@ -35,7 +35,24 @@ public class ItemPickup : MonoBehaviour
             {
                 Debug.Log("carrgounoE");
                 Inventario inventory = Player.GetComponent<Inventario>();
-                if (inventory.AddItem(item))
+                if (item.tipo == "peça")
+                {
+                    GameManager.npecas += 1;
+                    Destroy(gameObject);
+                    GameManager.textpecas = GameManager.npecas +"/5 peças";
+                    Debug.Log("peças " + GameManager.npecas);
+                    GameManager.ApanharE.SetActive(false);
+                    podeapanhar = false;
+                }
+                else if (item.tipo == "bala")
+                {
+                    GameManager.nbalas += 1;
+                    Debug.Log("balas " + GameManager.nbalas);
+                    Destroy(gameObject);
+                    GameManager.ApanharE.SetActive(false);
+                    podeapanhar = false;
+                }
+                else if(inventory.AddItem(item))
                 {
                    
                     Destroy(gameObject);

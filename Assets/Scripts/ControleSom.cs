@@ -2,25 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 
-public class ControleSom : MonoBehaviour { 
-    public Slider volumeSom;
-    public AudioSource soundMaster;
-    // Start is called before the first frame update
-    void Start()
+public class ControleSom : MonoBehaviour {
+
+    public AudioMixer audioMixer;
+
+    public void SetVolume (float volume)
     {
-        volumeSom.value = 0;
-
-
+        audioMixer.SetFloat("volume", volume);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        soundMaster.GetComponent<AudioSource> ().volume = volumeSom.value;
-
-
-
-    }
 }
+//https://www.youtube.com/watch?v=YOaYQrN1oYQ&t=75s&ab_channel=Brackeys

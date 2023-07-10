@@ -7,23 +7,20 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
-    guid: cf9c64cfb86d18341a0121e5915141b8
+    guid: bb51f58cb96d12b41a959648bbbff9c9
   - enabled: 1
     path: Assets/Scenes/Demo-Ilha.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
-    guid: 5247d8e1866dfec4a97bba4e8d1307a7
-  - enabled: 1
-    path: Assets/Scenes/Pause.unity
-    guid: 6bd49978ba5b1204391ddeaa89bd2d1d
+    guid: 3ad86951e81d9644cbccb6e5843e4695
   - enabled: 1
     path: Assets/Scenes/Settings.unity
-    guid: b868f90a9eb3eb54ebc83f223e92920d
+    guid: 57f925b6274829a4288c22f865cae339
   - enabled: 1
     path: Assets/Scenes/SureQuit.unity
-    guid: 8938fd09c56319d4ba0d07051b6c0939
+    guid: d62f20a7aaf3f914fa35144623a35098
   - enabled: 1
     path: Assets/Scenes/Win.unity
-    guid: 5f66aa68b052faf4c8971866ac251ceb
+    guid: 3156c43909ab6fa4d8ad5caa1d21b7fd
   m_configObjects: {}

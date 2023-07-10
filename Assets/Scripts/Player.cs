@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public float velocidadeAndar = 5;
+    public float velocidadeAndar = 2;
+    public float velocidadeAndarDevagar = 1;
+    public float velocidadeCorrer = 7;
     public float velocidadeRodar = 0.1f;
     CharacterController _characterController;
     private float inputAndar;
@@ -25,21 +27,26 @@ public class Player : MonoBehaviour
 
     [SerializeField] private AudioSource jumpSoundEffect;
     [SerializeField] private AudioSource correrSoundEffect;
+    [SerializeField] private AudioSource andarSoundEffect;
 
     Vector3 velocity;
     bool isGrounded;
 
-    public bool hasWeapon = false; // Defina como true quando o jogador pegar uma arma
+    
+
     private Animator animator;
     private Rigidbody rb;
+
     private bool isJumping = false;
+    private bool isRunning = false;
+    private bool isWalkingSlowly = false; 
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        // hasWeapon = true; //teste com arma - funciona!
+        
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
     }
@@ -55,15 +62,16 @@ public class Player : MonoBehaviour
         animator.SetFloat("VelocidadeAndar", movement.magnitude);
         animator.SetFloat("VelocidadeSalto", rb.velocity.y);
 
-        animator.SetBool("Arma", hasWeapon);
-
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0) //quando o boneco cai
         {
             velocity.y = -2f;
-            correrSoundEffect.Play();
+            if (movement.magnitude > 0.1f)
+            {
+                correrSoundEffect.Play();
+            }
         }
 
         inputAndar = Input.GetAxis("Vertical"); //andar para frente e para trás
@@ -88,32 +96,86 @@ public class Player : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-
-        if (movement.magnitude > 0.1f)
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (movement.magnitude > 0.5f)
+            if (isRunning)
             {
-                // O personagem está correndo
-                animator.SetBool("Caminhar", false);
-                animator.SetBool("Correr", true);
-                rb.AddForce(movement.normalized * speed);
+                isRunning = false;
+                correrSoundEffect.Stop();
+            }
+
+            if (movement.magnitude > 0.1f)
+            {
+                if (!isWalkingSlowly)
+                {
+                    isWalkingSlowly = true;
+                    animator.SetBool("Caminhar", true);
+                    animator.SetBool("Correr", false);
+                }
+
+                rb.AddForce(movement.normalized * velocidadeAndarDevagar);
             }
             else
             {
-                // O personagem está caminhando
-                animator.SetBool("Caminhar", true);
-                animator.SetBool("Correr", false);
-                rb.AddForce(movement.normalized * speed);
+                if (isWalkingSlowly)
+                {
+                    isWalkingSlowly = false;
+                    animator.SetBool("Caminhar", false);
+                }
             }
-            //Vector3 inputDir = orientation.forward * verticalInput 
-            // O personagem está se movendo, então atualize sua rotação
-            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
         }
         else
         {
-            // O personagem não está se movendo
-            animator.SetBool("Caminhar", false);
-            animator.SetBool("Correr", false);
+            // não pressionada
+            if (isWalkingSlowly)
+            {
+                isWalkingSlowly = false;
+                animator.SetBool("Caminhar", false);
+            }
+
+            if (movement.magnitude > 0.1f)
+            {
+                if (!isRunning)
+                {
+                    isRunning = true;
+                    correrSoundEffect.Play();
+                }
+                if (!andarSoundEffect.isPlaying)
+                {
+                    andarSoundEffect.Play();
+                }
+
+                if (movement.magnitude > 0.5f)
+                {
+                    // correr
+                    animator.SetBool("Caminhar", false);
+                    animator.SetBool("Correr", true);
+                    rb.AddForce(movement.normalized * velocidadeCorrer);
+                }
+                else
+                {
+                    // caminhar
+                    animator.SetBool("Caminhar", true);
+                    animator.SetBool("Correr", false);
+                    rb.AddForce(movement.normalized * velocidadeAndar);
+                }
+            }
+            else
+            {
+                if (isRunning)
+                {
+                    isRunning = false;
+                    correrSoundEffect.Stop();
+                }
+                if (andarSoundEffect.isPlaying)
+                {
+                    andarSoundEffect.Stop();
+                }
+
+                // parar de andar
+                animator.SetBool("Caminhar", false);
+                animator.SetBool("Correr", false);
+            }
         }
 
         if (Input.GetButtonDown("Jump") && !isJumping)
@@ -128,27 +190,19 @@ public class Player : MonoBehaviour
             isJumping = false;
         }
     }
-    void OnCollisionEnter(Collision collision)
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (collision.gameObject.tag == "Morte")
+        if (hit.gameObject.CompareTag("Morte"))
         {
-            SceneManager.LoadScene("GameOver");
+            animator.SetTrigger("Morrer");
+            Invoke("LoadGameOverScene", 3f);
         }
     }
 
-        void Die()
+    void LoadGameOverScene()
     {
-        animator.SetTrigger("Morrer");
-        // Implemente aqui o que acontece quando o personagem morre
+        SceneManager.LoadScene("GameOver");
     }
 
-    void GetWeapon() // Chame este método quando o personagem pegar uma arma
-    {
-        hasWeapon = true;
-    }
-
-    void LoseWeapon() // Chame este método quando o personagem perder a arma
-    {
-        hasWeapon = false;
-    }
 }
