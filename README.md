@@ -59,4 +59,5 @@ The following tools were used in the construction of the project:
 
 ## 🧑🏻 Authors
 [![Linkedin Badge](https://img.shields.io/badge/-Tiago_Borges-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tiago-borges-35a914231/)](https://www.linkedin.com/in/tiago-borges-35a914231/),
-# AfterEnd
+[![Linkedin Badge](https://img.shields.io/badge/-Ana_Alves-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/ana-alves-03117025a/)](https://www.linkedin.com/in/ana-alves-03117025a/),
+
